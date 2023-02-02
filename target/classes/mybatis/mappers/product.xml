@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "product">
+	
+	<!-- 선물세트 상품 리스트 -->
+	<select id="giftSetList" resultType="com.javaex.vo.HostVo">
+		SELECT 
+		        PI.PRODUCT_NO AS PRODUCTNO,
+		        PI.PRODUCT_NM AS PRODUCTNM,
+		        PI.PRICE AS PRICE,
+		        (
+		            SELECT
+		                MAX(SAVENAME) AS SAVENAME
+		            FROM SHOPPINGFILE SF
+		            WHERE SF.REGNO = PI.PRODUCT_NO
+		            GROUP BY REGNO
+		        ) AS SAVENAME
+		FROM PRODUCT_INFO PI
+		INNER JOIN INVENTORY IV
+		ON PI.PRODUCT_NO = IV.PRODUCT_NO
+		INNER JOIN CATEGORY CG
+		ON PI.CATEGORY = CG.CATEGORY_NO
+		AND CG.CATEGORY_NO = 'CT004'
+		ORDER BY PRODUCT_NM ASC
+	</select>
+	
+	
+	
+</mapper>

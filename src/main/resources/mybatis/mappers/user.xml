@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "user">
+	
+	<!-- 로그인 -->
+	<select id="userLogin" parameterType="com.javaex.vo.UserVo" resultType="com.javaex.vo.UserVo">
+		SELECT  CUST_INFO_NO AS CUSTINFONO,
+		        CUST_NM AS CUSTNAME,
+		        REG_DTTM AS REGDATE,
+		        CUST_ID AS CUSTID,
+		        CUST_PW AS CUSTPW,
+		        CUST_EMAIL AS CUSTEMAIL,
+		        CUST_PH AS CUSTPH
+		FROM CUST_INFO
+		WHERE CUST_ID = #{custId}
+		AND CUST_PW = #{custPw}
+	</select>
+	
+	<!-- 회원가입 -->
+	<insert id="userInsert" parameterType="com.javaex.vo.UserVo">
+		INSERT INTO CUST_INFO VALUES(CUST_INFO_SEQ.NEXTVAL,#{custName},SYSDATE,#{custId},#{custPw},#{custEmail},#{custPh})
+	</insert>
+	
+	<!-- id중복체크 -->
+	<select id="idCheck" parameterType="String" resultType="int">
+		SELECT  COUNT(*)
+		FROM CUST_INFO
+		WHERE CUST_ID = #{custId}
+	</select>
+	
+	<!-- eMail중복체크 -->
+	<select id="eMailCheck" parameterType="String" resultType="int">
+		SELECT  COUNT(*)
+		FROM CUST_INFO
+		WHERE CUST_EMAIL = #{custEmail}
+	</select>
+	
+	<!-- ph중복체크 -->
+	<select id="phCheck" parameterType="String" resultType="int">
+		SELECT  COUNT(*)
+		FROM CUST_INFO
+		WHERE CUST_PH = #{custPh}
+	</select>
+	
+</mapper>

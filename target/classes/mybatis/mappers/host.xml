@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "host">
+	
+	<!-- 로그인 -->
+	<select id="hostLogin" parameterType="com.javaex.vo.HostVo" resultType="com.javaex.vo.HostVo">
+		SELECT  BUYER_NO AS BUYERNO,
+		        REG_DTTM AS REGDATE,
+		        BUYER_NM AS BUYERNAME,
+		        BUYER_ID AS BUYERID,
+		        BUYER_PW AS BUYERPW,
+		        BUYER_EMAIL AS BUYEREMAIL,
+		        BUYER_PH AS BUYERPH
+		FROM BUYER_INFO
+		WHERE BUYER_ID = #{buyerId}
+		AND BUYER_PW = #{buyerPw}
+	</select>
+	
+	<!-- 회원가입 -->
+	<insert id="hostInsert" parameterType="com.javaex.vo.HostVo">
+		INSERT INTO BUYER_INFO VALUES(BUYER_INFO_SEQ.NEXTVAL,SYSDATE,#{buyerName},#{buyerId},#{buyerPw},#{buyerEmail},#{buyerPh})
+	</insert>
+	
+	<!-- Id 체크 -->
+	<select id="hostIdCheck" parameterType="String" resultType="int">
+		SELECT  COUNT(*)
+		FROM BUYER_INFO
+		WHERE BUYER_ID = #{buyerId}
+	</select>
+	
+	<!-- Email 체크 -->
+	<select id="hostEmailCheck" parameterType="String" resultType="int">
+		SELECT  COUNT(*)
+		FROM BUYER_INFO
+		WHERE BUYER_EMAIL = #{buyerEmail}
+	</select>
+	
+	<!-- Ph 체크 -->
+	<select id="hostPhCheck" parameterType="String" resultType="int">
+		SELECT  COUNT(*)
+		FROM BUYER_INFO
+		WHERE BUYER_PH = #{buyerPh}
+	</select>
+	
+	<!-- 상품등록 -->
+	<insert id="productWrite" parameterType="Map">
+		
+		<selectKey keyProperty="productNo" resultType="int" order="BEFORE">
+			SELECT PRODUCT_INFO_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		
+		INSERT INTO PRODUCT_INFO VALUES(#{productNo},#{category},#{productNm},#{price},SYSDATE,#{content})
+	</insert>
+	
+	<!--  재고수 등록 -->
+	<insert id="productCnt" parameterType="Map">
+		INSERT INTO INVENTORY VALUES(#{productNo},#{itCount})
+	</insert> 
+	
+	<!-- 사진저장 -->
+	<insert id="fileInsert" parameterType="Map">
+	
+		INSERT INTO SHOPPINGFILE VALUES(SHOPPINGFILE_SEQ.NEXTVAL,#{orgName},#{saveName},#{filePath},#{fileSize},#{regNo})
+	</insert>
+	
+	<!-- 상품 정보 가져오기 -->
+	<select id="productList" resultType="com.javaex.vo.HostVo">
+		SELECT  PI.PRODUCT_NO AS PRODUCTNO,
+		        PI.CATEGORY AS CATEGORY,
+		        PI.PRODUCT_NM AS PRODUCTNM,
+		        PI.PRICE AS PRICE,
+		        PI.CONTENT AS CONTENT,
+		        IV.IT_COUNT AS ITCOUNT,
+		        CG.CATEGORY_NM AS CATEGORYNM,
+		        TO_CHAR(PI.REG_DTTM,'YYYY-MM-DD') AS REGDTTM
+		FROM PRODUCT_INFO PI
+		INNER JOIN INVENTORY IV
+		ON PI.PRODUCT_NO = IV.PRODUCT_NO
+		INNER JOIN CATEGORY CG
+		ON PI.CATEGORY = CG.CATEGORY_NO
+		ORDER BY REG_DTTM ASC
+	</select>
+	
+	<!-- 사진정보 가져오기 -->
+	<select id="productFileList" resultType="com.javaex.vo.FileVo">
+		SELECT  FILE_NO AS FILENO,
+		        ORGNAME AS ORGNAME,
+		        SAVENAME AS SAVENAME,
+		        FILEPATH AS FILEPATH,
+		        FILESIZE AS FILESIZE,
+		        REGNO AS REGNO
+		FROM SHOPPINGFILE
+	</select>
+	
+	<!-- 상품 상세정보 -->
+	<select id="productSelectOne" parameterType="Map" resultType="com.javaex.vo.HostVo">
+		SELECT  PI.PRODUCT_NO AS PRODUCTNO,
+		        PI.CATEGORY AS CATEGORY,
+		        PI.PRODUCT_NM AS PRODUCTNM,
+		        PI.PRICE AS PRICE,
+		        PI.CONTENT AS CONTENT,
+		        IV.IT_COUNT AS ITCOUNT,
+		        CG.CATEGORY_NM AS CATEGORYNM,
+		        TO_CHAR(PI.REG_DTTM,'YYYY-MM-DD') AS REGDTTM
+		FROM PRODUCT_INFO PI
+		INNER JOIN INVENTORY IV
+		ON PI.PRODUCT_NO = IV.PRODUCT_NO
+		INNER JOIN CATEGORY CG
+		ON PI.CATEGORY = CG.CATEGORY_NO
+		WHERE PI.PRODUCT_NO = #{productNo}
+	</select>
+	
+	<!-- 상세정보 사진파일 -->
+	<select id="fileSelectOne" parameterType="Map" resultType="com.javaex.vo.FileVo">
+		SELECT  FILE_NO AS FILENO,
+		        ORGNAME AS ORGNAME,
+		        SAVENAME AS SAVENAME,
+		        FILEPATH AS FILEPATH,
+		        FILESIZE AS FILESIZE,
+		        REGNO AS REGNO
+		FROM SHOPPINGFILE
+		WHERE REGNO = #{regNo}
+	</select>
+	
+	<!-- 게시물 상품 삭제 -->
+	<delete id="productDelete" parameterType="int">
+		DELETE FROM PRODUCT_INFO WHERE PRODUCT_NO = #{productNo}
+	</delete>
+	
+	<!-- 상품 재고삭제 -->
+	<delete id="invenDelete" parameterType="int">
+		DELETE FROM INVENTORY WHERE PRODUCT_NO = #{productNo}
+	</delete>
+</mapper>
