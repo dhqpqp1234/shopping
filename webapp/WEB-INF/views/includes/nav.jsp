@@ -12,9 +12,9 @@
 		 <div id="nav-menu"> 
 			<ul id="nav-ul">
 				<li class="nav-li"><a href="${pageContext.request.contextPath}/giftSet" class="nav-a">선물세트</a></li>
-				<li class="nav-li"><a href="" class="nav-a">소고기</a></li>
-				<li class="nav-li"><a href="" class="nav-a">돼지고기</a></li>
-				<li class="nav-li"><a href="" class="nav-a">국거리</a></li>
+				<li class="nav-li"><a href="${pageContext.request.contextPath}/cawMeat" class="nav-a">소고기</a></li>
+				<li class="nav-li"><a href="${pageContext.request.contextPath}/pigMeat" class="nav-a">돼지고기</a></li>
+				<li class="nav-li"><a href="${pageContext.request.contextPath}/soupMeat" class="nav-a">국거리</a></li>
 				<li class="nav-li"><a href="" class="nav-a">할인상품</a></li>
 				<li class="nav-li"><a href="" class="nav-a">고객센터</a></li>
 			</ul>

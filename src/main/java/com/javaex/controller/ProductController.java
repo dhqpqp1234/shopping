@@ -42,10 +42,39 @@ public class ProductController {
 		List<HostVo> cList = productService.cawList();
 		
 		cMav.setViewName("productMenu/cawMeat");
-		cMav.addObject("", cMav);
+		cMav.addObject("cList", cList);
 		
 		return cMav;
 		
+	}
+	
+	//돼지
+	@RequestMapping(value="/pigMeat")
+	public ModelAndView pigMeat() {
+		
+		ModelAndView pMav = new ModelAndView();
+		
+		List<HostVo> pList = productService.pigList();
+		
+		pMav.addObject("pList", pList);
+		pMav.setViewName("productMenu/pigMeat");
+		
+		return pMav;
+		
+	}
+	
+	//국거리
+	@RequestMapping(value="/soupMeat")
+	public ModelAndView soupMeat() {
+		
+		ModelAndView sMav = new ModelAndView();
+		
+		List<HostVo> sList = productService.soupMeat();
+		
+		sMav.addObject("sList", sList);
+		sMav.setViewName("productMenu/soupMeat");
+		
+		return sMav;
 	}
 	
 }

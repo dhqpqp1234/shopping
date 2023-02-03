@@ -39,7 +39,7 @@
 		<!-- nev -->
 		
 		<!-- Title -->
-		<h1 id="Hnav-title">GIFT SET</h1>	
+		<h1 id="Hnav-title">SOUP MEAT</h1>	
 		<!-- Title -->
 		
 		<!-- center content -->
@@ -47,8 +47,8 @@
 			<ul class="swiper-wrapper">
 			<c:set var="i" value="0"/>
 			<c:set var="j" value="2"/>
-			<c:forEach var="pList" items="${pList}" varStatus="status">
-				<c:if test="${i%j == 0}">
+			<c:forEach var="sList" items="${sList}" varStatus="status">
+				<c:if test ="${i%j == 0}">
 				<li style="344px;">
 				</c:if>
 					<!-- 상품 전체 div -->
@@ -56,14 +56,14 @@
 						<!-- 상품사진 div -->
 						<div class="mun-prd-thumb">
 							<a href="">
-								<img id="set-img" src="${pageContext.request.contextPath}/upload/${pList.saveName}">
+								<img id="set-img" src="${pageContext.request.contextPath}/upload/${sList.saveName}">
 							</a>
 						</div>
 						<!-- 상품사진 div -->
 						<!-- 상품가격정보 -->
 						<div class="mun-prd-info">
 							<a href="" style="color: black;">
-								<span>${pList.productNm}<br>${pList.price}원</span>
+								<span>${sList.productNm}<br>${sList.price}원</span>
 							</a>
 						</div>
 						<!-- 상품가격정보 -->

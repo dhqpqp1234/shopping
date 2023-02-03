@@ -26,10 +26,27 @@ public class ProductDao {
 	// 소 카테고리 정보
 	public List<HostVo> cawList(){
 		
-		List<HostVo> cawList = sqlSession.selectList("product.");
+		List<HostVo> cawList = sqlSession.selectList("product.cawMeat");
 		
 		return cawList;
 		
+	}
+	
+	//돼지
+	public List<HostVo> pigList(){
+		
+		List<HostVo> pList = sqlSession.selectList("product.pigMeat");
+		
+		return pList;
+		
+	}
+	
+	//국거
+	public List<HostVo> soupMeat(){
+		
+		List<HostVo> sList = sqlSession.selectList("product.soupMeat"); 
+		
+		return sList;
 	}
 	
 }

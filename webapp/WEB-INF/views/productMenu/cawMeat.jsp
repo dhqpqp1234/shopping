@@ -45,27 +45,34 @@
 		<!-- center content -->
 		<div id="grid" class="swiper">
 			<ul class="swiper-wrapper">
-			<c:forEach var="pList" items="${pList}" varStatus="status">
+			<c:set var="i" value="0"/>
+			<c:set var="j" value="2"/>
+			<c:forEach var="cList" items="${cList}" varStatus="status">
+				<c:if test ="${i%j == 0}">
 				<li style="344px;">
+				</c:if>
 					<!-- 상품 전체 div -->
 					<div class="mun-prd-list-cover">
 						<!-- 상품사진 div -->
 						<div class="mun-prd-thumb">
 							<a href="">
-								<img id="set-img" src="${pageContext.request.contextPath}/upload/${pList.saveName}">
+								<img id="set-img" src="${pageContext.request.contextPath}/upload/${cList.saveName}">
 							</a>
 						</div>
 						<!-- 상품사진 div -->
 						<!-- 상품가격정보 -->
 						<div class="mun-prd-info">
 							<a href="" style="color: black;">
-								<span>${pList.productNm}<br>${pList.price}원</span>
+								<span>${cList.productNm}<br>${cList.price}원</span>
 							</a>
 						</div>
 						<!-- 상품가격정보 -->
 					</div>
 					<!-- 상품 전체 div -->
+				<c:if test="${i%j == j-1}">
 				</li>
+				</c:if>
+				<c:set var="i" value="${i+1}"/>
 			</c:forEach>	
 			</ul>
 		</div>

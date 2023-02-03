@@ -8,9 +8,9 @@
 		</h1>
 		<ul class="clearfix gnb_pc" id="title-ul">
 			<li><a href="${pageContext.request.contextPath}/giftSet" class="color-sub" style="font-size: 27px; color: black;">선물세트</a></li>
-			<li><a href="" class="color-sub" style="font-size: 27px; color: black;">소고기</a></li>
-			<li><a href="" class="color-sub" style="font-size: 27px; color: black;">돼지고기</a></li>
-			<li><a href="" class="color-sub" style="font-size: 27px; color: black;">국거리</a></li>
+			<li><a href="${pageContext.request.contextPath}/cawMeat" class="color-sub" style="font-size: 27px; color: black;">소고기</a></li>
+			<li><a href="${pageContext.request.contextPath}/pigMeat" class="color-sub" style="font-size: 27px; color: black;">돼지고기</a></li>
+			<li><a href="${pageContext.request.contextPath}/soupMeat" class="color-sub" style="font-size: 27px; color: black;">국거리</a></li>
 			<li><a href="" class="color-sub" style="font-size: 27px; color: black;">할인상품</a></li>
 			<li><a href="" class="color-sub" style="font-size: 27px; color: black;">고객센터</a></li>
 			

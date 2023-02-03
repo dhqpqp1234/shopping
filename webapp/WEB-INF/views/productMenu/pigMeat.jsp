@@ -39,7 +39,7 @@
 		<!-- nev -->
 		
 		<!-- Title -->
-		<h1 id="Hnav-title">GIFT SET</h1>	
+		<h1 id="Hnav-title">PIG MEAT</h1>	
 		<!-- Title -->
 		
 		<!-- center content -->
@@ -48,7 +48,7 @@
 			<c:set var="i" value="0"/>
 			<c:set var="j" value="2"/>
 			<c:forEach var="pList" items="${pList}" varStatus="status">
-				<c:if test="${i%j == 0}">
+				<c:if test ="${i%j == 0}">
 				<li style="344px;">
 				</c:if>
 					<!-- 상품 전체 div -->

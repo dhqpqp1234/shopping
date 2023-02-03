@@ -34,4 +34,19 @@ public class ProductService {
 		
 	}
 	
+	// 돼지
+	public List<HostVo> pigList(){
+		
+		List<HostVo> pList = productDao.pigList();
+		
+		return pList;
+	}
+	
+	//국거
+	public List<HostVo> soupMeat(){
+		
+		List<HostVo> sList = productDao.soupMeat(); 
+		
+		return sList;
+	}
 }

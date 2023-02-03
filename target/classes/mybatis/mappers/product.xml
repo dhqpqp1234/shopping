@@ -24,6 +24,70 @@
 		ORDER BY PRODUCT_NM ASC
 	</select>
 	
+	<!-- 소정보 가져오기 -->
+	<select id="cawMeat" resultType="com.javaex.vo.HostVo">
+		SELECT 
+		        PI.PRODUCT_NO AS PRODUCTNO,
+		        PI.PRODUCT_NM AS PRODUCTNM,
+		        PI.PRICE AS PRICE,
+		        (
+		            SELECT
+		                MAX(SAVENAME) AS SAVENAME
+		            FROM SHOPPINGFILE SF
+		            WHERE SF.REGNO = PI.PRODUCT_NO
+		            GROUP BY REGNO
+		        ) AS SAVENAME
+		FROM PRODUCT_INFO PI
+		INNER JOIN INVENTORY IV
+		ON PI.PRODUCT_NO = IV.PRODUCT_NO
+		INNER JOIN CATEGORY CG
+		ON PI.CATEGORY = CG.CATEGORY_NO
+		AND CG.CATEGORY_NO = 'CT001'
+		ORDER BY PRODUCT_NM ASC
+	</select>
 	
+	<!-- 돼지정보 가져오기 -->
+	<select id="pigMeat" resultType="com.javaex.vo.HostVo">
+		SELECT 
+		        PI.PRODUCT_NO AS PRODUCTNO,
+		        PI.PRODUCT_NM AS PRODUCTNM,
+		        PI.PRICE AS PRICE,
+		        (
+		            SELECT
+		                MAX(SAVENAME) AS SAVENAME
+		            FROM SHOPPINGFILE SF
+		            WHERE SF.REGNO = PI.PRODUCT_NO
+		            GROUP BY REGNO
+		        ) AS SAVENAME
+		FROM PRODUCT_INFO PI
+		INNER JOIN INVENTORY IV
+		ON PI.PRODUCT_NO = IV.PRODUCT_NO
+		INNER JOIN CATEGORY CG
+		ON PI.CATEGORY = CG.CATEGORY_NO
+		AND CG.CATEGORY_NO = 'CT002'
+		ORDER BY PRODUCT_NM ASC
+	</select>
+	
+	<!-- 국거 정보 가져오기 -->
+	<select id="soupMeat" resultType="com.javaex.vo.HostVo">
+		SELECT 
+		        PI.PRODUCT_NO AS PRODUCTNO,
+		        PI.PRODUCT_NM AS PRODUCTNM,
+		        PI.PRICE AS PRICE,
+		        (
+		            SELECT
+		                MAX(SAVENAME) AS SAVENAME
+		            FROM SHOPPINGFILE SF
+		            WHERE SF.REGNO = PI.PRODUCT_NO
+		            GROUP BY REGNO
+		        ) AS SAVENAME
+		FROM PRODUCT_INFO PI
+		INNER JOIN INVENTORY IV
+		ON PI.PRODUCT_NO = IV.PRODUCT_NO
+		INNER JOIN CATEGORY CG
+		ON PI.CATEGORY = CG.CATEGORY_NO
+		AND CG.CATEGORY_NO = 'CT003'
+		ORDER BY PRODUCT_NM ASC
+	</select>
 	
 </mapper>
