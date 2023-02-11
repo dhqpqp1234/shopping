@@ -59,26 +59,35 @@
 					</div>
 					<div class="join-name">
 						<label class="join-label">이름</label>
-						<input type="text" name="custName" placeholder="이름을 입력해 주세요." onfocus="this.placeholder = ''" onblur="this.placeholder='이름을 입력해 주세요.'">
+						<input type="text" id="name" name="custName" placeholder="이름을 입력해 주세요." onfocus="this.placeholder = ''" onblur="this.placeholder='이름을 입력해 주세요.'">
 					</div>
 					<div class="join-eMail">
 						<label class="join-label">이메일</label>
-						<input type="text" name="custEmail" id="input-eMail" placeholder="이메일를 입력해 주세요." onfocus="this.placeholder = ''" onblur="this.placeholder='이메일을 입력해 주세요.'">
-						<button type="button" id="eMailCheck" class="reset_val">중복체크</button>
+						<input type="text"  name="custEmail" id="input-eMail" placeholder="이메일를 입력해 주세요." onfocus="this.placeholder = ''" onblur="this.placeholder='이메일을 입력해 주세요.'">
+						<select id="mailSelec">
+							<option value="@naver.com">@naver.com</option>
+							<option value="@daum.net">@daum.net</option>
+							<option value="@gmail.com">@gmail.com</option>
+							<option value="직접입력">직접입력</option>
+						</select>
 					</div>
-					<div class="join-phone" style="width: auto;">
+					<div>
+						<input id="certification" disabled="disabled" placeholder="인증번호를 입력해 주세요." onfocus="this.placeholder = ''" onblur="this.placeholder='인증번호를 입력해 주세요.'">
+					</div>
+						<button type="button" id="eMailCheck" class="reset_val">본인인증</button>
+					<div id="joinForm" class="join-phone" style="width: auto;">
 						<label class="join-label" >전화번호</label>
-						<input type="text"  name="custPh" id="input-ph" placeholder="전화번호를 입력해 주세요." onfocus="this.placeholder = ''" onblur="this.placeholder='전화번호를 입력해 주세요.'">
+						<input type="text"   name="custPh" id="input-ph" placeholder="전화번호를 입력해 주세요." onfocus="this.placeholder = ''" onblur="this.placeholder='전화번호를 입력해 주세요.'">
 						<button type="button" id="phCheck" class="reset_val">중복체크</button>
 					</div>
-					<div class="joBtn">
+					 <div id="joinBtns" class="joBtn">
 						<button class="log-btn" type="button">
 							<a href="${pageContext.request.contextPath}/loginForm">로그인</a>
 						</button>
-						<button class="log-btn" type="submit">
+						<button id="joinBtn" class="log-btn" type="submit">
 							<span>회원가입</span>
 						</button>
-					</div>	
+					</div> 	
 				</form>
 			</section>
 		</div>
@@ -93,6 +102,34 @@
 </body>
 
 <script type="text/javascript">
+
+	$("#joinBtn").on("click",function(){
+		
+		var id = $("#input-id").val();
+		var passWard = $("#pwCheck").val();
+		var name = $("#name").val();
+		var eMail = $("#eMail").val();
+		var ph = $("#ph").val();
+		
+		if(id == null || id == ""){
+			alert("아이디를 입력해 주세요.");
+			return false;
+		}else if(passWard == null || passWard == ""){
+			alert("비밀번호를 입력해 주세요.");
+			return false;
+		}else if(name == null || name == ""){
+			alert("이름을 입력해 주세요.");
+			return false;
+		}else if(eMail == null || eMail == ""){
+			alert("이메일을 입력해 주세요.");
+			return false;
+		}else if(ph == null || ph == ""){
+			alert("전화번호를 입력해 주세요.");
+			return false;
+		}
+		
+	})
+
 	//ID입력시	
 	$("#idCheck").on("click",function(){
 		var custId = $("#input-id").val();
@@ -135,10 +172,34 @@
 		
 	});
 	
+	//이메일 인증
+	$("#eMailCheck").on("click",function(){
+		
+		var custEmail = $("#input-eMail").val() + $("#mailSelec").val();
+		console.log(custEmail); //메일 확인
+		var mailCheckInput = $("#certification") //인증번호 받는곳 
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath}/eMailCheck?custEmail="+custEmail,		
+			type : "get",
+			success : function(data) {
+				console.log("data"+data);
+				mailCheckInput.attr("disabled",false);
+				code = data;
+				alert("인증번호가 전송되었습니다.");
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+			
+		});
+		
+	});
 	
+	/*
 	$("#eMailCheck").on("click",function(){
 		var custEmail = $("#input-eMail").val();
-		
+		console.log(custEmail);
 		//eMail 중복체크
 		$.ajax({
 			url : "${pageContext.request.contextPath}/eMailCheck",		
@@ -163,7 +224,7 @@
 		});
 		
 	});
-	
+	*/
 	$("#phCheck").on("click",function(){
 		var custPh = $("#input-ph").val();
 		

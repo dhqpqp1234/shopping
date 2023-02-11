@@ -77,4 +77,10 @@ public class ProductController {
 		return sMav;
 	}
 	
+	//구매정보 폼
+	@RequestMapping(value="buyInfo")
+	public String buyInfo() {
+		return "buyForm/buyInfo";
+	}
+	
 }

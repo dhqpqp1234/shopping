@@ -26,6 +26,7 @@
 		SELECT  COUNT(*)
 		FROM CUST_INFO
 		WHERE CUST_ID = #{custId}
+		
 	</select>
 	
 	<!-- eMail중복체크 -->

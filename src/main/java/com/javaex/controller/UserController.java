@@ -3,6 +3,7 @@ package com.javaex.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -74,29 +75,46 @@ public class UserController {
 	@RequestMapping(value="idCheck")
 	public int idCheck(@RequestBody UserVo userVo) {
 	
-	int result = userService.idCheck(userVo);
+	String custId = userVo.getCustId();
+	
+	int result = userService.idCheck(custId);
 		
 	return result;	
+	}
+	
+	//eMail 인증
+	@RequestMapping(value="eMailCheck", method= {RequestMethod.GET})
+	@ResponseBody
+	public String eMailCheck(String custEmail) {
+		
+		return  userService.joinEmail(custEmail) ;
 	}
 	
 	//eMail 중복체크
-	@ResponseBody
-	@RequestMapping(value="eMailCheck")
-	public int eMailCheck(@RequestBody UserVo userVo) {
-	
-	int result = userService.eMailCheck(userVo);
-		
-	return result;	
-	}
+	/*
+	  @ResponseBody
+	  @RequestMapping(value="eMailCheck") 
+	  public int eMailCheck(@RequestBody UserVo userVo) {
+	  
+	  String custEmail = userVo.getCustEmail();
+	  int result = userService.eMailCheck(custEmail);
+	  
+	  return result; 
+	  }
+	 */
 	
 	//ph 중복체크
-	@ResponseBody
-	@RequestMapping(value="phCheck")
-	public int phCheck(@RequestBody UserVo userVo) {
 	
-	int result = userService.phCheck(userVo);
-		
-	return result;	
-	}
+	  @ResponseBody
+	  
+	  @RequestMapping(value="phCheck") 
+	  public int phCheck(@RequestBody UserVo userVo) {
+	  
+	  String custPh = userVo.getCustPh();  
+	  int result = userService.phCheck(custPh);
+	  
+	  return result; 
+	  }
+	 
 	
 }

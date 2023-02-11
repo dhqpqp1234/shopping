@@ -132,8 +132,6 @@ public class HostController {
 		ModelAndView mav = new ModelAndView();
 		
 		
-	
-		
 		Map<String, Object> wMap = new HashMap<String,Object>();
 		
 		

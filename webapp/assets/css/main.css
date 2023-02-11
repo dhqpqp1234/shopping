@@ -268,7 +268,7 @@ input{
 
 .join-phone{
 	position: absolute;
-	left: 43.5%;
+	left: 40.7%;
 }
 
 .join-name{
@@ -276,9 +276,8 @@ input{
 }
 
 .joBtn{
-	position: absolute;
-	top : 50.5%;
-	left: 48%;
+    margin-top: 70px;
+    margin-left: -40px;
 }
 
 #log-content{
@@ -746,3 +745,107 @@ input{
 	margin-right: 20px;
 }
 
+.Lgqdq {
+    display: flex;
+    padding: 30px 0px;
+}
+
+.fuesQh {
+    margin-right: 40px;
+    flex-shrink: 0;
+    width: 430px;
+    height: 430px;
+    position: absolute;
+    top: 60%;
+    left: 25%;
+}
+
+.kFKHOr {
+    border: 1px solid rgb(238, 238, 238);
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.NhTxc {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.ecWVIk {
+    width: 100%;
+    position: absolute;
+    transition: opacity 0.2s ease-in-out 0s;
+    opacity: 1;
+    object-fit: cover;
+}
+
+#buyName {
+    width: 600px;
+    position: absolute;
+    right: 3%;
+    top: 60%;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+}
+#buyRname {
+    width: 600px;
+    position: absolute;
+    right: 3%;
+    top: 69%;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#buyPrice{
+	width: 600px;
+    position: absolute;
+    right: 10%;
+    top: 73%;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#conInput {
+    position: absolute;
+    left: 101%;
+    width: 450px;
+    height: 430px;
+}
+
+#mailSelec{
+	    width: 230px;
+    height: 50px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 2px solid black;
+    font-family: 'TTCrownMychewR';
+    font-size: 20px;
+    text-align: center;
+}
+
+div#joinForm {
+    position: absolute;
+    top: 111%;
+}
+
+button#eMailCheck {
+    position: absolute;
+    top: 100%;
+    left: 55.7%;
+}
+
+div#joinBtns {
+    position: absolute;
+    top: 106%;
+    left: 53.3%;
+}
+
+input#certification {
+    position: absolute;
+    left: 44%;
+}

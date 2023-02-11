@@ -29,25 +29,26 @@ public class UserDao {
 	}
 	
 	//id 중복체크
-	public int idCheck(UserVo userVo) {
+	public int idCheck(String custId) {
 		
-		int result = sqlSession.selectOne("user.idCheck", userVo);
+		int result = sqlSession.selectOne("user.idCheck", custId);
 		
 		return result;
 	}
 	
 	//eMail 중복체크
-	public int eMailCheck(UserVo userVo) {
+	/*
+	public int eMailCheck(String custEmail) {
 		
-		int result = sqlSession.selectOne("user.eMailCheck", userVo);
+		int result = sqlSession.selectOne("user.eMailCheck", custEmail);
 		
 		return result;
 	}
-	
+	*/
 	//ph 중복체크
-	public int phCheck(UserVo userVo) {
+	public int phCheck(String custPh) {
 		
-		int result = sqlSession.selectOne("user.phCheck", userVo);
+		int result = sqlSession.selectOne("user.phCheck", custPh);
 		
 		return result;
 	}
