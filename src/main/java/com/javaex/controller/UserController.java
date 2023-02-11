@@ -87,21 +87,9 @@ public class UserController {
 	@ResponseBody
 	public String eMailCheck(String custEmail) {
 		
-		return  userService.joinEmail(custEmail) ;
+		return  userService.mailSend(custEmail) ;
 	}
 	
-	//eMail 중복체크
-	/*
-	  @ResponseBody
-	  @RequestMapping(value="eMailCheck") 
-	  public int eMailCheck(@RequestBody UserVo userVo) {
-	  
-	  String custEmail = userVo.getCustEmail();
-	  int result = userService.eMailCheck(custEmail);
-	  
-	  return result; 
-	  }
-	 */
 	
 	//ph 중복체크
 	
