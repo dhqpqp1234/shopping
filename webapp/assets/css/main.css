@@ -372,14 +372,15 @@ input{
 }
 
 #boardWite{
-	margin-left: 510px;
+	position: absolute;
+    top: 50%;
+    left: 25%;
 	background-color: #fff;
 	width: 1300px;
 	height: 1500px;
 	border-radius: 5px 5px 5px 5px;
 	font-family: 'TTCrownMychewR';
 	font-size: 20px;	
-	margin-top: -433px;
 }
 
 #writeTitle{
@@ -848,4 +849,55 @@ div#joinBtns {
 input#certification {
     position: absolute;
     left: 44%;
+}
+
+.menuFont{
+	font-family: 'TTCrownMychewR';
+	font-size: 20px;
+}
+
+div#paging {
+    position: absolute;
+    top: 180%;
+    left: 43%;
+    font-size: 20px;
+    font-family: 'TTCrownMychewR';
+}
+
+td.pNo {
+    text-align: center;
+}
+
+div#Mpaging {
+    position: absolute;
+    top: 110%;
+    left: 47%;
+    font-size: 20px;
+    font-family: 'TTCrownMychewR';
+}
+
+div#hostSearch {
+    position: absolute;
+    top: 120%;
+    left: 10%;
+}
+
+div#pagingNo {
+    position: absolute;
+    top: -100%;
+    left: 35%;
+}
+
+select#searchSelBox {
+    width: 100px;
+    height: 50px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+button#searchBtn {
+    width: 80px;
+    height: 50px;
+    border-radius: 5px;
+    background-color: #fff;
 }

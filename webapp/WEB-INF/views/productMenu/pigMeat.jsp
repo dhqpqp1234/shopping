@@ -62,7 +62,7 @@
 						<!-- 상품사진 div -->
 						<!-- 상품가격정보 -->
 						<div class="mun-prd-info">
-							<a href="" style="color: black;">
+							<a href="" class="menuFont" style="color: black;">
 								<span>${pList.productNm}<br>${pList.price}원</span>
 							</a>
 						</div>

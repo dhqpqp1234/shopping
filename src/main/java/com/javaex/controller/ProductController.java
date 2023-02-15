@@ -6,10 +6,12 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.javaex.service.ProductService;
 import com.javaex.vo.HostVo;
+import com.javaex.vo.PagingVo;
 
 @Controller
 public class ProductController {
@@ -19,17 +21,23 @@ public class ProductController {
 	
 	//선물세트 폼
 	@RequestMapping(value="/giftSet")
-	public ModelAndView giftSet() {
+	public ModelAndView giftSet(@RequestParam(defaultValue="1") int curPage) {
 		
 		ModelAndView mav = new ModelAndView();
 		
-		List<HostVo> pList = productService.giftList(); 
+		//글 개수 가져오기(giftSet)
+		int listCnt = productService.listCnt();
+		
+		PagingVo pagination = new PagingVo(listCnt, curPage);
+		
+		List<HostVo> pList = productService.giftList(pagination); 
 		
 		int count = pList.size();
 		
 		mav.setViewName("productMenu/giftSet");
 		mav.addObject("pList", pList);
-		
+		mav.addObject("listCnt",listCnt);
+		mav.addObject("pagination", pagination);
 		return mav;
 	}
 	

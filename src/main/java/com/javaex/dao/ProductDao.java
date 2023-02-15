@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.javaex.vo.FileVo;
 import com.javaex.vo.HostVo;
+import com.javaex.vo.PagingVo;
 
 @Repository
 public class ProductDao {
@@ -16,9 +17,9 @@ public class ProductDao {
 	private SqlSession sqlSession;
 	
 	//선물셋 상품 정보가져오기
-	public List<HostVo> giftSetList(){
+	public List<HostVo> giftSetList(PagingVo pagination){
 		
-		List<HostVo> giftList = sqlSession.selectList("product.giftSetList");
+		List<HostVo> giftList = sqlSession.selectList("product.giftSetList",pagination);
 		
 		return giftList;
 	}
@@ -47,6 +48,14 @@ public class ProductDao {
 		List<HostVo> sList = sqlSession.selectList("product.soupMeat"); 
 		
 		return sList;
+	}
+	
+	//글 전체 개수 가져오기 (giftSet)
+	public int listCnt() {
+		
+		int listCnt = sqlSession.selectOne("totalCnt");
+		
+		return listCnt;
 	}
 	
 }

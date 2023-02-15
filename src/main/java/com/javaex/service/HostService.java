@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.javaex.dao.HostDao;
 import com.javaex.vo.FileVo;
 import com.javaex.vo.HostVo;
+import com.javaex.vo.PagingVo;
 
 @Service
 public class HostService {
@@ -135,13 +136,29 @@ public class HostService {
 		wMap.put("productNo", productNo);
 		return wMap;
 	}
-	
+	//전체 등록글 수 가져오기
+	public int listCnt() {
+		int listCnt = hostDao.listCnt();
+		return listCnt;
+	}
 	//등록 상품 리스트 가져오기
-	public Map<String, Object> productList(){
+	public Map<String, Object> productList(PagingVo pagination){
 		
 		Map<String, Object> pMap = new HashMap<String, Object>();
 		
-		List<HostVo> pList = hostDao.productList();
+		int curPage = pagination.getCurPage();
+		int pageSize = pagination.getPageSize();
+
+		//시작글번호
+		int startRnum = (curPage-1)*pageSize + 1 ;
+		
+		//끝글번호
+		int endRnum = (startRnum + pageSize) - 1;
+		
+		pagination.setStartRnum(startRnum); 
+		pagination.setEndRnum(endRnum); 
+		
+		List<HostVo> pList = hostDao.productList(pagination);
 		List<FileVo> fList = hostDao.productFileList();
 		
 		pMap.put("fList", fList);

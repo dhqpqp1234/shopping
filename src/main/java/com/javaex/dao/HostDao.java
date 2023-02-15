@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.javaex.vo.FileVo;
 import com.javaex.vo.HostVo;
+import com.javaex.vo.PagingVo;
 
 @Repository
 public class HostDao {
@@ -83,9 +84,9 @@ public class HostDao {
 	  }
 	  
 	  //등록 상품 정보 가져오기
-	  public List<HostVo> productList(){
+	  public List<HostVo> productList(PagingVo pagination){
 		  
-		  List<HostVo> pList = sqlSession.selectList("host.productList");
+		  List<HostVo> pList = sqlSession.selectList("host.productList",pagination);
 		  
 		  return pList;
 	  }
@@ -130,4 +131,14 @@ public class HostDao {
 		  
 		  return count;
 	  }
+	  
+	  //등록글 전체 개수 가져오기
+	  public int listCnt() {
+		  
+		  int listCnt = sqlSession.selectOne("listCnt");
+		  
+		  return listCnt;
+		  
+	  }
+	  
 }

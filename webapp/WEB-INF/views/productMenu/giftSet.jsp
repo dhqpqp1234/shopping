@@ -62,7 +62,7 @@
 						<!-- 상품사진 div -->
 						<!-- 상품가격정보 -->
 						<div class="mun-prd-info">
-							<a href="" style="color: black;">
+							<a href="" class="menuFont" style="color: black;">
 								<span>${pList.productNm}<br>${pList.price}원</span>
 							</a>
 						</div>
@@ -76,6 +76,39 @@
 			</c:forEach>	
 			</ul>
 		</div>
+		<!-- 페이징 -->
+			<div id="paging">		
+				<div>
+                    <c:if test="${pagination.curRange ne 1 }">	<!-- 현재 블록이 1과 같지않다면 처음버튼-->
+                        <a href="#" onClick="fn_paging(1)">[처음]</a> 
+                    </c:if>
+                    <c:if test="${pagination.curPage ne 1}">	<!-- 현재 페이지가 1과 같지 않다면 이전버튼 -->
+                        <a href="#" onClick="fn_paging('${pagination.prevPage }')" style="color : black;">[이전]</a> 
+                    </c:if>
+                    <c:forEach var="pageNum" begin="${pagination.startPage }" end="${pagination.endPage }">
+                        <c:choose>
+                            <c:when test="${pageNum eq  pagination.curPage}">	<!-- pageNum이 현재 블록과 같다면 페이지번호 -->
+                                <span style="font-weight: bold;"><a href="${pageContext.request.contextPath}/gifrSet?curPage=${pageNum}" style="color : black;" >${pageNum }</a></span> 
+                            </c:when>
+                            <c:otherwise>	<!-- 아니면 페이지번호 -->
+                                <a href="#" style="color : black;" onClick="fn_paging('${pageNum }')">${pageNum}</a> 
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>	<!-- 현재 블록이 총페이지수랑 같지 않고 총페이지수가 0보다크면 다음페이지 보이기 -->
+                    <c:if test="${pagination.curPage ne pagination.pageCnt && pagination.pageCnt > 0}">
+                        <a href="#" style="color : black;" onClick="fn_paging('${pagination.nextPage }')">[다음]</a> 
+                    </c:if>		<!-- 현재블록이 총 블록수랑 같지않고 총블록수가 0보다 클때 끝버튼 보여주기-->
+                    <c:if test="${pagination.curRange ne pagination.rangeCnt && pagination.rangeCnt > 0}">
+                        <a href="#" onClick="fn_paging('${pagination.pageCnt }')">[끝]</a> 
+                    </c:if>
+                </div>
+                
+              <div>
+                  총 게시글 수 : ${pagination.listCnt } /    총 페이지 수 : ${pagination.pageCnt } / 현재 페이지 : ${pagination.curPage } / 현재 블럭 : ${pagination.curRange } / 총 블럭 수 : ${pagination.rangeCnt }
+              </div>
+	     </div>   
+	    <!-- 페이징 -->
+	    
 		<!-- center content -->
 
 		<!-- //footer -->
@@ -88,7 +121,9 @@
 
 <script type="text/javascript">
 
-
+function fn_paging(curPage) {
+	location.href = "/shopping/giftSet?curPage=" + curPage;
+	}
 	
 </script>
 

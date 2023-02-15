@@ -103,13 +103,17 @@
 
 <script type="text/javascript">
 
+
+
+
 	$("#joinBtn").on("click",function(){
 		
 		var id = $("#input-id").val();
 		var passWard = $("#pwCheck").val();
 		var name = $("#name").val();
-		var eMail = $("#eMail").val();
-		var ph = $("#ph").val();
+		var eMail = $("#input-eMail").val();
+		var ph = $("#input-ph").val();
+		var certification = $("#certification").val();
 		
 		if(id == null || id == ""){
 			alert("아이디를 입력해 주세요.");
@@ -125,6 +129,9 @@
 			return false;
 		}else if(ph == null || ph == ""){
 			alert("전화번호를 입력해 주세요.");
+			return false;
+		}else if(certification == null || certification == "" || certification != code){
+			alert("인증번호를 확인해 주세요.")
 			return false;
 		}
 		
@@ -146,7 +153,6 @@
 			alert("영문을 입력해 주세요.");
 			return false;
 		}
-		console.log("11111111111S")
 		
 		//Id 중복체크
 		$.ajax({
@@ -187,34 +193,6 @@
 				mailCheckInput.attr("disabled",false);
 				code = data;
 				alert("인증번호가 전송되었습니다.");
-			},
-			error : function(XHR, status, error) {
-				console.error(status + " : " + error);
-			}
-			
-		});
-		
-	});
-	
-	/*
-	$("#eMailCheck").on("click",function(){
-		var custEmail = $("#input-eMail").val();
-		console.log(custEmail);
-		//eMail 중복체크
-		$.ajax({
-			url : "${pageContext.request.contextPath}/eMailCheck",		
-			type : "post",
-			data : JSON.stringify({"custEmail":custEmail}),
-			contentType : "application/json",
-			dataType : "json",
-			success : function(result) {
-				console.log(result);
-				if(result == 0){
-					alert("사용할 수 있는 이메일 입니다.");
-				}else {
-					alert("사용중인 이메일 입니다.");
-					return false;
-				}
 				
 			},
 			error : function(XHR, status, error) {
@@ -224,7 +202,8 @@
 		});
 		
 	});
-	*/
+	
+	
 	$("#phCheck").on("click",function(){
 		var custPh = $("#input-ph").val();
 		

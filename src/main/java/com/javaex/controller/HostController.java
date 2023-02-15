@@ -21,15 +21,18 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.javaex.service.HostService;
+import com.javaex.service.ProductService;
 import com.javaex.vo.FileVo;
 import com.javaex.vo.HostVo;
+import com.javaex.vo.PagingVo;
 
 @Controller
 public class HostController {
 	
 	@Autowired
 	private HostService hostService;
-	
+	@Autowired
+	private ProductService productService;
 	//Host 메인 화면
 	@RequestMapping(value="/admin")
 	public String hostMain() {
@@ -145,16 +148,28 @@ public class HostController {
 	
 	//등록상품 리스트 가져오기
 	@RequestMapping("/productList")
-	public ModelAndView productList() {
+	public ModelAndView productList(@RequestParam(defaultValue="1") int curPage,
+									@RequestParam(value="searchType", required=false) String searchType,
+									@RequestParam(value="keyWord", required=false) String keyword) {
 		
 		ModelAndView mav = new ModelAndView();
 		
 		Map<String, Object> pMap = new HashMap<String, Object>();
 		
-		pMap = hostService.productList();
+		//글 개수 가져오기(allList)
+		int listCnt = hostService.listCnt();
+		
+		PagingVo pagination = new PagingVo(listCnt, curPage);
+		
+		pagination.setSearchType(searchType);
+		pagination.setKeyWord(keyword);
+		
+		pMap = hostService.productList(pagination);
 		
 		mav.setViewName("hostMain/hostManagerMent");
 		mav.addObject("pMap", pMap);
+		mav.addObject("listCnt", listCnt);
+		mav.addObject("pagination", pagination);
 		return mav;
 	}
 	

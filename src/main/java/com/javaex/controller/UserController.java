@@ -86,8 +86,8 @@ public class UserController {
 	@RequestMapping(value="eMailCheck", method= {RequestMethod.GET})
 	@ResponseBody
 	public String eMailCheck(String custEmail) {
-		
-		return  userService.mailSend(custEmail) ;
+		String a = userService.mailSend(custEmail) ;
+		return  a ;
 	}
 	
 	

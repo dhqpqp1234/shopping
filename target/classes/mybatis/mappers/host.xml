@@ -64,21 +64,77 @@
 	</insert>
 	
 	<!-- 상품 정보 가져오기 -->
-	<select id="productList" resultType="com.javaex.vo.HostVo">
-		SELECT  PI.PRODUCT_NO AS PRODUCTNO,
-		        PI.CATEGORY AS CATEGORY,
-		        PI.PRODUCT_NM AS PRODUCTNM,
-		        PI.PRICE AS PRICE,
-		        PI.CONTENT AS CONTENT,
-		        IV.IT_COUNT AS ITCOUNT,
-		        CG.CATEGORY_NM AS CATEGORYNM,
-		        TO_CHAR(PI.REG_DTTM,'YYYY-MM-DD') AS REGDTTM
-		FROM PRODUCT_INFO PI
-		INNER JOIN INVENTORY IV
-		ON PI.PRODUCT_NO = IV.PRODUCT_NO
-		INNER JOIN CATEGORY CG
-		ON PI.CATEGORY = CG.CATEGORY_NO
-		ORDER BY REG_DTTM ASC
+	<select id="productList" parameterType="com.javaex.vo.PagingVo" resultType="com.javaex.vo.HostVo">
+		<!-- <![CDATA[
+		SELECT * 
+		FROM(SELECT   ROWNUM AS SEQ,
+		              PI.PRODUCT_NO AS PRODUCTNO,
+		              PI.PRODUCT_NM AS PRODUCTNM,
+		              PI.PRICE AS PRICE,
+  		              PI.REG_DTTM AS REGDTTM,
+		              IV.IT_COUNT,
+		              CG.CATEGORY_NM AS CATEGORYNM,
+		              (
+		                  SELECT
+		                      MAX(SAVENAME) AS SAVENAME
+		                  FROM SHOPPINGFILE SF
+		                  WHERE SF.REGNO = PI.PRODUCT_NO
+		                  GROUP BY REGNO
+		              ) AS SAVENAME
+		      FROM PRODUCT_INFO PI
+		      INNER JOIN INVENTORY IV
+		      ON PI.PRODUCT_NO = IV.PRODUCT_NO
+		      INNER JOIN CATEGORY CG
+		      ON PI.CATEGORY = CG.CATEGORY_NO
+		      ORDER BY REGDTTM ASC) SB
+		]]>
+		      
+		<if test="searchType == 'searchTitle' and keyWord != null and keyWord != ''">
+			WHERE PRODUCTNM LIKE '%'||#{keyWord}||'%'
+		</if>   
+		<if test="searchType == 'searchCate' and keyWord != null and keyWord != ''">
+			AND CATEGORYNM LIKE '%'||#{keyWord}||'%'
+		</if>   
+		
+		<![CDATA[
+			  AND SEQ >= #{startRnum}
+			  AND SEQ <= #{endRnum}		
+		]]> -->
+		<![CDATA[
+		SELECT * 
+		FROM(SELECT   ROWNUM AS SEQ,
+		              PI.PRODUCT_NO AS PRODUCTNO,
+		              PI.PRODUCT_NM AS PRODUCTNM,
+		              PI.PRICE AS PRICE,
+		              PI.REG_DTTM AS REGDTTM,
+		              IV.IT_COUNT,
+		              CG.CATEGORY_NM AS CATEGORYNM,
+		              (
+		                  SELECT
+		                      MAX(SAVENAME) AS SAVENAME
+		                  FROM SHOPPINGFILE SF
+		                  WHERE SF.REGNO = PI.PRODUCT_NO
+		                  GROUP BY REGNO
+		              ) AS SAVENAME
+		      FROM PRODUCT_INFO PI
+		      INNER JOIN INVENTORY IV
+		      ON PI.PRODUCT_NO = IV.PRODUCT_NO
+		      INNER JOIN CATEGORY CG
+		      ON PI.CATEGORY = CG.CATEGORY_NO
+		      WHERE 1 = 1
+	      ]]>
+		  <if test="keyWord != null and keyWord != '' and searchType == 'searchTitle'">    
+		      AND PI.PRODUCT_NM LIKE '%'||#{keyWord}||'%'
+		  </if>
+		  <if test="keyWord != null and keyWord != '' and searchType == 'searchCate'">    
+		      AND CG.CATEGORY_NM LIKE '%'||#{keyWord}||'%'
+		  </if>
+		<![CDATA[
+			) SB
+			WHERE SEQ >= #{startRnum}
+			AND SEQ <= #{endRnum}
+		]]>
+		
 	</select>
 	
 	<!-- 사진정보 가져오기 -->
@@ -90,6 +146,11 @@
 		        FILESIZE AS FILESIZE,
 		        REGNO AS REGNO
 		FROM SHOPPINGFILE
+	</select>
+	
+	<!-- 게시글 전체 수량 가져오기 -->
+	<select id="listCnt" resultType="int">
+		SELECT COUNT(*) FROM PRODUCT_INFO
 	</select>
 	
 	<!-- 상품 상세정보 -->
