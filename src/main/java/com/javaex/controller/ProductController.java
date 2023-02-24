@@ -21,7 +21,9 @@ public class ProductController {
 	
 	//선물세트 폼
 	@RequestMapping(value="/giftSet")
-	public ModelAndView giftSet(@RequestParam(defaultValue="1") int curPage) {
+	public ModelAndView giftSet(@RequestParam(defaultValue="1") int curPage,
+								@RequestParam(value="searchType", required=false) String searchType,
+								@RequestParam(value="keyWord", required=false) String keyWord) {
 		
 		ModelAndView mav = new ModelAndView();
 		
@@ -30,9 +32,10 @@ public class ProductController {
 		
 		PagingVo pagination = new PagingVo(listCnt, curPage);
 		
-		List<HostVo> pList = productService.giftList(pagination); 
+		pagination.setSearchType(searchType);
+		pagination.setKeyWord(keyWord);
 		
-		int count = pList.size();
+		List<HostVo> pList = productService.giftList(pagination); 
 		
 		mav.setViewName("productMenu/giftSet");
 		mav.addObject("pList", pList);
@@ -43,14 +46,26 @@ public class ProductController {
 	
 	// 소고기 폼
 	@RequestMapping(value="/cawMeat")
-	public ModelAndView cawMeat() {
-		
+	public ModelAndView cawMeat(@RequestParam(defaultValue="1") int curPage,
+								@RequestParam(value="searchType", required=false) String searchType,
+								@RequestParam(value="keyWord", required=false) String keyWord) {
+					
 		ModelAndView cMav = new ModelAndView();
 		
-		List<HostVo> cList = productService.cawList();
+		//글 개수 가져오기(giftSet)
+		int listCnt = productService.listCnt();
+		
+		PagingVo pagination = new PagingVo(listCnt, curPage);
+		
+		pagination.setSearchType(searchType);
+		pagination.setKeyWord(keyWord);
+		
+		List<HostVo> cList = productService.cawList(pagination);
 		
 		cMav.setViewName("productMenu/cawMeat");
 		cMav.addObject("cList", cList);
+		cMav.addObject("listCnt",listCnt);
+		cMav.addObject("pagination", pagination);
 		
 		return cMav;
 		

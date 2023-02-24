@@ -901,3 +901,9 @@ button#searchBtn {
     border-radius: 5px;
     background-color: #fff;
 }
+
+#giftSearch{
+	position: absolute;
+    top: -120%;
+    left: 10%;
+}

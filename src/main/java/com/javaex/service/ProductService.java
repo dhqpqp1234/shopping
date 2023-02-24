@@ -31,17 +31,29 @@ public class ProductService {
 		//끝글번호
 		int endRnum = (startRnum + pageSize) - 1;
 		
-		pagination.setStartRnum(startRnum); //값이 비어잇어서 넣어줫음
-		pagination.setEndRnum(endRnum); ////값이 비어잇어서 넣어줫음
+		pagination.setStartRnum(startRnum); 
+		pagination.setEndRnum(endRnum); 
 		
 		List<HostVo> giftList = productDao.giftSetList(pagination);
 		return giftList;
 	}
 	
 	//소 카테고리
-	public List<HostVo> cawList(){
+	public List<HostVo> cawList(PagingVo pagination){
 		
-		List<HostVo> cawList = productDao.cawList();
+		int curPage = pagination.getCurPage();
+		int pageSize = pagination.getPageSize();
+
+		//시작글번호
+		int startRnum = (curPage-1)*pageSize + 1 ;
+		
+		//끝글번호
+		int endRnum = (startRnum + pageSize) - 1;
+		
+		pagination.setStartRnum(startRnum); 
+		pagination.setEndRnum(endRnum); 
+		
+		List<HostVo> cawList = productDao.cawList(pagination);
 		
 		return cawList;
 		

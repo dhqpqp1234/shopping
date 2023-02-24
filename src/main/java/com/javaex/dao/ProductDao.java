@@ -25,9 +25,9 @@ public class ProductDao {
 	}
 	
 	// 소 카테고리 정보
-	public List<HostVo> cawList(){
+	public List<HostVo> cawList(PagingVo pagination){
 		
-		List<HostVo> cawList = sqlSession.selectList("product.cawMeat");
+		List<HostVo> cawList = sqlSession.selectList("product.cawMeat",pagination);
 		
 		return cawList;
 		

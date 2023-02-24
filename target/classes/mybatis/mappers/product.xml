@@ -9,58 +9,75 @@
 	</select>
 	<!-- 선물세트 상품 리스트 -->
 	<select id="giftSetList" parameterType="com.javaex.vo.PagingVo" resultType="com.javaex.vo.HostVo">
-		
+	<![CDATA[
 		SELECT * 
-		FROM(SELECT   ROWNUM AS SEQ,
-		              PI.PRODUCT_NO AS PRODUCTNO,
-		              PI.PRODUCT_NM AS PRODUCTNM,
-		              PI.PRICE AS PRICE,
-		              IV.IT_COUNT,
-		              (
-		                  SELECT
-		                      MAX(SAVENAME) AS SAVENAME
-		                  FROM SHOPPINGFILE SF
-		                  WHERE SF.REGNO = PI.PRODUCT_NO
-		                  GROUP BY REGNO
-		              ) AS SAVENAME
-		      FROM PRODUCT_INFO PI
-		      INNER JOIN INVENTORY IV
-		      ON PI.PRODUCT_NO = IV.PRODUCT_NO
-		      INNER JOIN CATEGORY CG
-		      ON PI.CATEGORY = CG.CATEGORY_NO
-		      AND CG.CATEGORY_NO = 'CT004'
-		      ORDER BY ROWNUM ASC) SB
-		<![CDATA[
-			  WHERE SEQ >= #{startRnum}
-			  AND SEQ <= #{endRnum}		
-		]]>
+		FROM (SELECT    ROWNUM AS RN,
+		                PI.PRODUCT_NO AS PRODUCTNO,
+		                PI.CATEGORY AS CATEGORY,
+		                PI.PRODUCT_NM AS PRODUCTNM,
+		                PI.PRICE AS PRICE,
+		                PI.REG_DTTM AS REGDTTM,
+		                PI.CONTENT AS CONTENT,
+		                (SELECT MAX(SAVENAME)
+		                 FROM SHOPPINGFILE SF
+		                 WHERE SF.REGNO = PI.PRODUCT_NO
+		                 GROUP BY REGNO) AS SAVENAME,
+		                 IV.IT_COUNT AS ITCOUNT,
+		                 CG.CATEGORY_NM CATEGORYNM
+		        FROM PRODUCT_INFO PI
+		        INNER JOIN INVENTORY IV
+		        ON PI.PRODUCT_NO = IV.PRODUCT_NO
+		        INNER JOIN CATEGORY CG
+		        ON PI.CATEGORY = CG.CATEGORY_NO
+		        WHERE PI.CATEGORY = 'CT004') SB
+	]]>			
+	<![CDATA[
+		WHERE RN >= #{startRnum}
+		AND RN <= #{endRnum}
+	]]>	
+	<if test="searchType == 'searchTitle' and keyWord != '' and keyWord != null">
+		AND SB.PRODUCTNM LIKE '%'||#{keyWord}||'%'
+	</if>	
+			
+		
 		
 	</select>
 	
 	<!-- 소정보 가져오기 -->
-	<select id="cawMeat" resultType="com.javaex.vo.HostVo">
-		SELECT 
-		        PI.PRODUCT_NO AS PRODUCTNO,
-		        PI.PRODUCT_NM AS PRODUCTNM,
-		        PI.PRICE AS PRICE,
-		        (
-		            SELECT
-		                MAX(SAVENAME) AS SAVENAME
-		            FROM SHOPPINGFILE SF
-		            WHERE SF.REGNO = PI.PRODUCT_NO
-		            GROUP BY REGNO
-		        ) AS SAVENAME
-		FROM PRODUCT_INFO PI
-		INNER JOIN INVENTORY IV
-		ON PI.PRODUCT_NO = IV.PRODUCT_NO
-		INNER JOIN CATEGORY CG
-		ON PI.CATEGORY = CG.CATEGORY_NO
-		AND CG.CATEGORY_NO = 'CT001'
-		ORDER BY PRODUCT_NM ASC
+	<select id="cawMeat" resultType="com.javaex.vo.HostVo" parameterType="com.javaex.vo.PagingVo">
+		<![CDATA[
+		SELECT * 
+		FROM (SELECT    ROWNUM AS RN,
+		                PI.PRODUCT_NO AS PRODUCTNO,
+		                PI.CATEGORY AS CATEGORY,
+		                PI.PRODUCT_NM AS PRODUCTNM,
+		                PI.PRICE AS PRICE,
+		                PI.REG_DTTM AS REGDTTM,
+		                PI.CONTENT AS CONTENT,
+		                (SELECT MAX(SAVENAME)
+		                 FROM SHOPPINGFILE SF
+		                 WHERE SF.REGNO = PI.PRODUCT_NO
+		                 GROUP BY REGNO) AS SAVENAME,
+		                 IV.IT_COUNT AS ITCOUNT,
+		                 CG.CATEGORY_NM CATEGORYNM
+		        FROM PRODUCT_INFO PI
+		        INNER JOIN INVENTORY IV
+		        ON PI.PRODUCT_NO = IV.PRODUCT_NO
+		        INNER JOIN CATEGORY CG
+		        ON PI.CATEGORY = CG.CATEGORY_NO
+		        WHERE PI.CATEGORY = 'CT001') SB
+		]]>
+		<![CDATA[
+		WHERE RN >= #{startRnum}
+		AND RN <= #{endRnum}
+		]]>
+		<if test="searchType == 'searchTitle' and keyWord != null and keyWord != ''">
+		AND SB.PRODUCTNM LIKE '%'||#{keyWord}||'%'         
+		</if>
 	</select>
 	
 	<!-- 돼지정보 가져오기 -->
-	<select id="pigMeat" resultType="com.javaex.vo.HostVo">
+	<select id="pigMeat" resultType="com.javaex.vo.HostVo" >
 		SELECT 
 		        PI.PRODUCT_NO AS PRODUCTNO,
 		        PI.PRODUCT_NM AS PRODUCTNM,

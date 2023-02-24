@@ -79,7 +79,7 @@
                     <c:if test="${pagination.curPage ne 1}">	<!-- 현재 페이지가 1과 같지 않다면 이전버튼 -->
                         <a href="#" onClick="fn_paging('${pagination.prevPage }')" style="color : black;">[이전]</a> 
                     </c:if>
-                    <c:forEach var="pageNum" begin="${pagination.startPage }" end="${pagination.endPage }">
+                    <c:forEach step="1" var="pageNum" begin="${pagination.startPage}" end="${pagination.endPage}">
                         <c:choose>
                             <c:when test="${pageNum eq  pagination.curPage}">	<!-- pageNum이 현재 블록과 같다면 페이지번호 -->
                                 <span style="font-weight: bold;"><a href="#" onClick="fn_paging('${pageNum }')" style="color : black;" >${pageNum }</a></span> 
